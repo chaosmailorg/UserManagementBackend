@@ -56,48 +56,52 @@ int main(int argc, char* argv[]) {
           status = FAILURE;
         else
           status = rpcobject->addUser(command[1],command[2],command[3],atoi(command[4].c_str()),( command[5].compare("TRUE") == 0 ? true : false));
-      }
+      } else {
 
-      if (command[0].compare(std::string("CHANGEUSERPASSWORD")) == 0)
-      {
-        if (command.size() != 3)
-          status = FAILURE;
-        else
-          status = rpcobject->changeUserPassword(command[1],command[2]);
-      }
-
-      if (command[0].compare(std::string("CHANGEUSERQUOTA")) == 0)
-      {
-        if (command.size() != 3)
-          status = FAILURE;
-        else
-          status = rpcobject->changeUserQuota(command[1],atoi(command[2].c_str()));
-      }
-
-      if (command[0].compare(std::string("EXISTSUSER")) == 0)
-      {
-        if (command.size() != 2)
-          status = FAILURE;
-        else
+        if (command[0].compare(std::string("CHANGEUSERPASSWORD")) == 0)
         {
-          bool exists = rpcobject->existsUser(command[1]);
-          if (exists)
-            std::cout << "USER " << command[1] << " EXISTS IN DATABASE" << std::endl;
+          if (command.size() != 3)
+            status = FAILURE;
           else
-            std::cout << "USER " << command[1] << " DOES NOT EXIST IN DATABASE" << std::endl;
-          status = SUCCESS;
-        }
-      }
+            status = rpcobject->changeUserPassword(command[1],command[2]);
+        } else {
 
-      if (command[0].compare(std::string("USERCOUNT")) == 0)
-      {
-        if (command.size() != 1)
-          status = FAILURE;
-        else
-        {
-          int count = rpcobject->userCount();
-          std::cout << count << " USER IN DATABASE" << std::endl;
-          status = SUCCESS;
+          if (command[0].compare(std::string("CHANGEUSERQUOTA")) == 0)
+          {
+            if (command.size() != 3)
+              status = FAILURE;
+            else
+              status = rpcobject->changeUserQuota(command[1],atoi(command[2].c_str()));
+          } else {
+
+            if (command[0].compare(std::string("EXISTSUSER")) == 0)
+            {
+              if (command.size() != 2)
+                status = FAILURE;
+              else
+              {
+                bool exists = rpcobject->existsUser(command[1]);
+                if (exists)
+                  std::cout << "USER " << command[1] << " EXISTS IN DATABASE" << std::endl;
+                else
+                  std::cout << "USER " << command[1] << " DOES NOT EXIST IN DATABASE" << std::endl;
+                status = SUCCESS;
+              }
+            } else {
+
+              if (command[0].compare(std::string("USERCOUNT")) == 0)
+              {
+                if (command.size() != 1)
+                  status = FAILURE;
+                else
+                {
+                  int count = rpcobject->userCount();
+                  std::cout << count << " USER IN DATABASE" << std::endl;
+                  status = SUCCESS;
+                }
+              }
+            }
+          }
         }
       }
 
