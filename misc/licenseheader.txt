@@ -14,33 +14,5 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ *
  */
-
-module UserManagementInterface {
-
-  enum statuscode {
-    SUCCESS,
-    FAILURE,
-    FAILUREUSEREXISTS,
-    FAILUREEMPTYSTRING
-  };
-
-  interface RPCObject {
-
-    /* add user */
-    statuscode addUser(string username, string name, string password, string domain, long quota, bool active);
-
-    /* change user password */
-    statuscode changeUserPassword(string usernam, string newpassword);
-
-    /* change user quota */
-    statuscode changeUserQuota(string username, long quota);
-
-    /* returns true if user exists */
-    bool existsUser(string username);
-
-    /* returns number of useraccounts */
-    int userCount();
-    
-  };
-};
