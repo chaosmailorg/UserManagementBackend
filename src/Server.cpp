@@ -1,8 +1,13 @@
+#include <memory>
+#include <array>
 #include <cstdlib>
 #include <iostream>
+
 #include "RPCObjectI.h"
 
 using namespace UserManagementInterface;
+using namespace odb::core;
+using namespace std;
 
 int main(int argc, char* argv[]) {
   statuscode status = SUCCESS;

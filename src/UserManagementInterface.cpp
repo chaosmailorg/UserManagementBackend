@@ -74,7 +74,7 @@ void
 }
 
 ::UserManagementInterface::statuscode
-IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx)
+IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx)
 {
     ::IceInternal::InvocationObserver __observer(this, __UserManagementInterface__RPCObject__addUser_name, __ctx);
     int __cnt = 0;
@@ -86,7 +86,7 @@ IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& usern
             __checkTwowayOnly(__UserManagementInterface__RPCObject__addUser_name);
             __delBase = __getDelegate(false);
             ::IceDelegate::UserManagementInterface::RPCObject* __del = dynamic_cast< ::IceDelegate::UserManagementInterface::RPCObject*>(__delBase.get());
-            return __del->addUser(username, password, domain, quota, active, __ctx, __observer);
+            return __del->addUser(username, name, password, domain, quota, active, __ctx, __observer);
         }
         catch(const ::IceInternal::LocalExceptionWrapper& __ex)
         {
@@ -100,7 +100,7 @@ IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& usern
 }
 
 ::Ice::AsyncResultPtr
-IceProxy::UserManagementInterface::RPCObject::begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx, const ::IceInternal::CallbackBasePtr& __del, const ::Ice::LocalObjectPtr& __cookie)
+IceProxy::UserManagementInterface::RPCObject::begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx, const ::IceInternal::CallbackBasePtr& __del, const ::Ice::LocalObjectPtr& __cookie)
 {
     __checkAsyncTwowayOnly(__UserManagementInterface__RPCObject__addUser_name);
     ::IceInternal::OutgoingAsyncPtr __result = new ::IceInternal::OutgoingAsync(this, __UserManagementInterface__RPCObject__addUser_name, __del, __cookie);
@@ -109,6 +109,7 @@ IceProxy::UserManagementInterface::RPCObject::begin_addUser(const ::std::string&
         __result->__prepare(__UserManagementInterface__RPCObject__addUser_name, ::Ice::Normal, __ctx);
         ::IceInternal::BasicStream* __os = __result->__startWriteParams(::Ice::DefaultFormat);
         __os->write(username);
+        __os->write(name);
         __os->write(password);
         __os->write(domain);
         __os->write(quota);
@@ -487,13 +488,14 @@ IceProxy::UserManagementInterface::RPCObject::__newInstance() const
 }
 
 ::UserManagementInterface::statuscode
-IceDelegateM::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver& __observer)
+IceDelegateM::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver& __observer)
 {
     ::IceInternal::Outgoing __og(__handler.get(), __UserManagementInterface__RPCObject__addUser_name, ::Ice::Normal, __context, __observer);
     try
     {
         ::IceInternal::BasicStream* __os = __og.startWriteParams(::Ice::DefaultFormat);
         __os->write(username);
+        __os->write(name);
         __os->write(password);
         __os->write(domain);
         __os->write(quota);
@@ -689,16 +691,17 @@ IceDelegateM::UserManagementInterface::RPCObject::userCount(const ::Ice::Context
 }
 
 ::UserManagementInterface::statuscode
-IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver&)
+IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver&)
 {
     class _DirectI : public ::IceInternal::Direct
     {
     public:
 
-        _DirectI(::UserManagementInterface::statuscode& __result, const ::std::string& __p_username, const ::std::string& __p_password, const ::std::string& __p_domain, ::Ice::Long __p_quota, bool __p_active, const ::Ice::Current& __current) : 
+        _DirectI(::UserManagementInterface::statuscode& __result, const ::std::string& __p_username, const ::std::string& __p_name, const ::std::string& __p_password, const ::std::string& __p_domain, ::Ice::Long __p_quota, bool __p_active, const ::Ice::Current& __current) : 
             ::IceInternal::Direct(__current),
             _result(__result),
             _m_username(__p_username),
+            _m_name(__p_name),
             _m_password(__p_password),
             _m_domain(__p_domain),
             _m_quota(__p_quota),
@@ -714,7 +717,7 @@ IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& u
             {
                 throw ::Ice::OperationNotExistException(__FILE__, __LINE__, _current.id, _current.facet, _current.operation);
             }
-            _result = servant->addUser(_m_username, _m_password, _m_domain, _m_quota, _m_active, _current);
+            _result = servant->addUser(_m_username, _m_name, _m_password, _m_domain, _m_quota, _m_active, _current);
             return ::Ice::DispatchOK;
         }
         
@@ -722,6 +725,7 @@ IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& u
         
         ::UserManagementInterface::statuscode& _result;
         const ::std::string& _m_username;
+        const ::std::string& _m_name;
         const ::std::string& _m_password;
         const ::std::string& _m_domain;
         ::Ice::Long _m_quota;
@@ -733,7 +737,7 @@ IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& u
     ::UserManagementInterface::statuscode __result;
     try
     {
-        _DirectI __direct(__result, username, password, domain, quota, active, __current);
+        _DirectI __direct(__result, username, name, password, domain, quota, active, __current);
         try
         {
             __direct.getServant()->__collocDispatch(__direct);
@@ -1080,17 +1084,19 @@ UserManagementInterface::RPCObject::___addUser(::IceInternal::Incoming& __inS, c
     __checkMode(::Ice::Normal, __current.mode);
     ::IceInternal::BasicStream* __is = __inS.startReadParams();
     ::std::string username;
+    ::std::string name;
     ::std::string password;
     ::std::string domain;
     ::Ice::Long quota;
     bool active;
     __is->read(username);
+    __is->read(name);
     __is->read(password);
     __is->read(domain);
     __is->read(quota);
     __is->read(active);
     __inS.endReadParams();
-    ::UserManagementInterface::statuscode __ret = addUser(username, password, domain, quota, active, __current);
+    ::UserManagementInterface::statuscode __ret = addUser(username, name, password, domain, quota, active, __current);
     ::IceInternal::BasicStream* __os = __inS.__startWriteParams(::Ice::DefaultFormat);
     __os->write(__ret);
     __inS.__endWriteParams(true);

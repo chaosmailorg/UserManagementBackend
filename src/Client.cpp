@@ -52,10 +52,10 @@ int main(int argc, char* argv[]) {
 
       if (command[0].compare(std::string("ADDUSER")) == 0)
       {
-        if (command.size() != 6)
+        if (command.size() != 7)
           status = FAILURE;
         else
-          status = rpcobject->addUser(command[1],command[2],command[3],atoi(command[4].c_str()),( command[5].compare("TRUE") == 0 ? true : false));
+          status = rpcobject->addUser(command[1],command[2],command[3],command[4],atoi(command[5].c_str()),( command[6].compare("TRUE") == 0 ? true : false));
       } else {
 
         if (command[0].compare(std::string("CHANGEUSERPASSWORD")) == 0)

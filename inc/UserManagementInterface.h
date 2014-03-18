@@ -133,39 +133,39 @@ class RPCObject : virtual public ::IceProxy::Ice::Object
 {
 public:
 
-    ::UserManagementInterface::statuscode addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active)
+    ::UserManagementInterface::statuscode addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active)
     {
-        return addUser(username, password, domain, quota, active, 0);
+        return addUser(username, name, password, domain, quota, active, 0);
     }
-    ::UserManagementInterface::statuscode addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx)
+    ::UserManagementInterface::statuscode addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx)
     {
-        return addUser(username, password, domain, quota, active, &__ctx);
+        return addUser(username, name, password, domain, quota, active, &__ctx);
     }
 #ifdef ICE_CPP11
     ::Ice::AsyncResultPtr
-    begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::IceInternal::Function<void (::UserManagementInterface::statuscode)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
+    begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::IceInternal::Function<void (::UserManagementInterface::statuscode)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
     {
-        return __begin_addUser(username, password, domain, quota, active, 0, __response, __exception, __sent);
+        return __begin_addUser(username, name, password, domain, quota, active, 0, __response, __exception, __sent);
     }
     ::Ice::AsyncResultPtr
-    begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
+    begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
     {
-        return begin_addUser(username, password, domain, quota, active, 0, ::Ice::newCallback(__completed, __sent), 0);
+        return begin_addUser(username, name, password, domain, quota, active, 0, ::Ice::newCallback(__completed, __sent), 0);
     }
     ::Ice::AsyncResultPtr
-    begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (::UserManagementInterface::statuscode)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
+    begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (::UserManagementInterface::statuscode)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
     {
-        return __begin_addUser(username, password, domain, quota, active, &__ctx, __response, __exception, __sent);
+        return __begin_addUser(username, name, password, domain, quota, active, &__ctx, __response, __exception, __sent);
     }
     ::Ice::AsyncResultPtr
-    begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
+    begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
     {
-        return begin_addUser(username, password, domain, quota, active, &__ctx, ::Ice::newCallback(__completed, __sent));
+        return begin_addUser(username, name, password, domain, quota, active, &__ctx, ::Ice::newCallback(__completed, __sent));
     }
     
 private:
 
-    ::Ice::AsyncResultPtr __begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx, const ::IceInternal::Function<void (::UserManagementInterface::statuscode)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception, const ::IceInternal::Function<void (bool)>& __sent)
+    ::Ice::AsyncResultPtr __begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx, const ::IceInternal::Function<void (::UserManagementInterface::statuscode)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception, const ::IceInternal::Function<void (bool)>& __sent)
     {
         class Cpp11CB : public ::IceInternal::Cpp11FnCallbackNC
         {
@@ -201,48 +201,48 @@ private:
             
             ::std::function<void (::UserManagementInterface::statuscode)> _response;
         };
-        return begin_addUser(username, password, domain, quota, active, __ctx, new Cpp11CB(__response, __exception, __sent));
+        return begin_addUser(username, name, password, domain, quota, active, __ctx, new Cpp11CB(__response, __exception, __sent));
     }
     
 public:
 #endif
 
-    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active)
+    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active)
     {
-        return begin_addUser(username, password, domain, quota, active, 0, ::IceInternal::__dummyCallback, 0);
+        return begin_addUser(username, name, password, domain, quota, active, 0, ::IceInternal::__dummyCallback, 0);
     }
 
-    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx)
+    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx)
     {
-        return begin_addUser(username, password, domain, quota, active, &__ctx, ::IceInternal::__dummyCallback, 0);
+        return begin_addUser(username, name, password, domain, quota, active, &__ctx, ::IceInternal::__dummyCallback, 0);
     }
 
-    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
     {
-        return begin_addUser(username, password, domain, quota, active, 0, __del, __cookie);
+        return begin_addUser(username, name, password, domain, quota, active, 0, __del, __cookie);
     }
 
-    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
     {
-        return begin_addUser(username, password, domain, quota, active, &__ctx, __del, __cookie);
+        return begin_addUser(username, name, password, domain, quota, active, &__ctx, __del, __cookie);
     }
 
-    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::UserManagementInterface::Callback_RPCObject_addUserPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::UserManagementInterface::Callback_RPCObject_addUserPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
     {
-        return begin_addUser(username, password, domain, quota, active, 0, __del, __cookie);
+        return begin_addUser(username, name, password, domain, quota, active, 0, __del, __cookie);
     }
 
-    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::UserManagementInterface::Callback_RPCObject_addUserPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    ::Ice::AsyncResultPtr begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, const ::std::string& domain, ::Ice::Long quota, bool active, const ::Ice::Context& __ctx, const ::UserManagementInterface::Callback_RPCObject_addUserPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
     {
-        return begin_addUser(username, password, domain, quota, active, &__ctx, __del, __cookie);
+        return begin_addUser(username, name, password, domain, quota, active, &__ctx, __del, __cookie);
     }
 
     ::UserManagementInterface::statuscode end_addUser(const ::Ice::AsyncResultPtr&);
     
 private:
 
-    ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*);
-    ::Ice::AsyncResultPtr begin_addUser(const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& __cookie = 0);
+    ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*);
+    ::Ice::AsyncResultPtr begin_addUser(const ::std::string&, const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& __cookie = 0);
     
 public:
 
@@ -821,7 +821,7 @@ class RPCObject : virtual public ::IceDelegate::Ice::Object
 {
 public:
 
-    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, ::IceInternal::InvocationObserver&) = 0;
+    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, ::IceInternal::InvocationObserver&) = 0;
 
     virtual ::UserManagementInterface::statuscode changeUserPassword(const ::std::string&, const ::std::string&, const ::Ice::Context*, ::IceInternal::InvocationObserver&) = 0;
 
@@ -847,7 +847,7 @@ class RPCObject : virtual public ::IceDelegate::UserManagementInterface::RPCObje
 {
 public:
 
-    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, ::IceInternal::InvocationObserver&);
+    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, ::IceInternal::InvocationObserver&);
 
     virtual ::UserManagementInterface::statuscode changeUserPassword(const ::std::string&, const ::std::string&, const ::Ice::Context*, ::IceInternal::InvocationObserver&);
 
@@ -873,7 +873,7 @@ class RPCObject : virtual public ::IceDelegate::UserManagementInterface::RPCObje
 {
 public:
 
-    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, ::IceInternal::InvocationObserver&);
+    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Context*, ::IceInternal::InvocationObserver&);
 
     virtual ::UserManagementInterface::statuscode changeUserPassword(const ::std::string&, const ::std::string&, const ::Ice::Context*, ::IceInternal::InvocationObserver&);
 
@@ -903,7 +903,7 @@ public:
     virtual const ::std::string& ice_id(const ::Ice::Current& = ::Ice::Current()) const;
     static const ::std::string& ice_staticId();
 
-    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Current& = ::Ice::Current()) = 0;
+    virtual ::UserManagementInterface::statuscode addUser(const ::std::string&, const ::std::string&, const ::std::string&, const ::std::string&, ::Ice::Long, bool, const ::Ice::Current& = ::Ice::Current()) = 0;
     ::Ice::DispatchStatus ___addUser(::IceInternal::Incoming&, const ::Ice::Current&);
 
     virtual ::UserManagementInterface::statuscode changeUserPassword(const ::std::string&, const ::std::string&, const ::Ice::Current& = ::Ice::Current()) = 0;

@@ -2,8 +2,18 @@
 
 namespace UserManagementInterface {
 
-  statuscode RPCObjectI::addUser(const std::string& username, const std::string& password, const std::string& domain, long quota,     bool active ,const Ice::Current&){
-    std::cout << "RPCObjectI::addUser " << username << " " << password << " " << domain << " " << quota << " " << active << std::endl;
+/*
+ * TODO: Fix datetime format and datatype (boost?)
+ */
+  statuscode RPCObjectI::addUser(const std::string& username, const std::string& name, const std::string& password, const std::string& domain, long quota, bool active , const Ice::Current&){
+      const char* local_part = "hans.acker";
+      boost::posix_time::ptime t(boost::posix_time::second_clock::universal_time());
+      boost::posix_time::ptime created = t;
+      boost::posix_time::ptime modified = t;
+      std::string maildir = "/maildir/";
+      std::unique_ptr<database> db(new odb::mysql::database(dbuser, dbpassword, dbname));
+      User user(username, password, name, maildir, quota, local_part, domain, created, modified, true);
+      addUser(user, db);
     return SUCCESS;
   }
 

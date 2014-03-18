@@ -9,8 +9,9 @@
 CXX = g++
 CPPFLAGS = $(FLAGS_FAST)
 CPPFLAGS += $(FLAGS_HARDENED)
+CPPFLAGS += -std=c++0x
 INCLUDES = -I$(ICE_HOME)/include -I./inc
-LIBS = -L$(ICE_HOME)/lib -lIce -lIceUtil
+LIBS = -L$(ICE_HOME)/lib -lIce -lIceUtil -lodb-mysql -lodb -lodb-boost
 
 # =============================================================================
 
@@ -20,17 +21,23 @@ LIBS = -L$(ICE_HOME)/lib -lIce -lIceUtil
 %.o: ./src/%.cpp
 	$(CXX) $(CPPFLAGS) -c $(INCLUDES) -o $@ $<
 
+%.o: ./src/%.cxx ./inc/%.hxx
+	$(CXX) $(CPPFLAGS) -c $(INCLUDES) -o $@ $<
+
+%.o: ./src/%.cxx
+	$(CXX) $(CPPFLAGS) -c $(INCLUDES) -o $@ $<
+
 # =============================================================================
 # TARGETS
 # =============================================================================
 
 all: server client
 
-server: UserManagementInterface.o RPCObjectI.o Server.o
-	$(CXX) $(CPPFLAGS) $(INCLUDES) UserManagementInterface.o RPCObjectI.o Server.o -o Server.run $(LIBS)
+server: UserManagementInterface.o user.o user-odb.o RPCObjectI.o Server.o
+	$(CXX) $(CPPFLAGS) $(INCLUDES) UserManagementInterface.o user.o user-odb.o RPCObjectI.o Server.o -o Server.run $(LIBS)
 
 client: UserManagementInterface.o RPCObjectI.o Client.o
-	$(CXX) $(CPPFLAGS) $(INCLUDES) UserManagementInterface.o RPCObjectI.o Client.o -o Client.run $(LIBS)
+	$(CXX) $(CPPFLAGS) $(INCLUDES) UserManagementInterface.o Client.o -o Client.run $(LIBS)
 
 # =============================================================================
 

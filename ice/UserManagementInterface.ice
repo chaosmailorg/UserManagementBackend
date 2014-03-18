@@ -10,7 +10,7 @@ module UserManagementInterface {
   interface RPCObject {
 
     /* add user */
-    statuscode addUser(string username, string password, string domain, long quota, bool active);
+    statuscode addUser(string username, string name, string password, string domain, long quota, bool active);
 
     /* change user password */
     statuscode changeUserPassword(string usernam, string newpassword);
