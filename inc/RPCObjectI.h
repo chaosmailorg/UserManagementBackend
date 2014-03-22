@@ -24,6 +24,7 @@
 #include <memory>
 #include <array>
 #include <string>
+#include <sstream>
 
 #include <odb/database.hxx>
 #include <odb/transaction.hxx>
@@ -75,7 +76,7 @@ namespace UserManagementInterface {
 
     public:
       /* add user */
-      virtual statuscode addUser(const std::string& username,const std::string& name, const std::string& password, const std::string& domain, long quota, bool active ,const Ice::Current&);
+      virtual statuscode addUser(const std::string& username,const std::string& name, const std::string& password, long quota, bool active ,const Ice::Current&);
 
       /* change user password */
       virtual statuscode changeUserPassword(const std::string& usernam, const std::string& newpassword ,const Ice::Current&);
