@@ -39,6 +39,7 @@ namespace UserManagementInterface {
           unsigned long long quota,
           const std::string & local_part,
           const std::string & domain,
+          const std::string & recovery_mail,
           boost::posix_time::ptime created,
           boost::posix_time::ptime modified,
           bool active);
@@ -64,6 +65,9 @@ namespace UserManagementInterface {
       const std::string & domain() const;
       void domain(std::string & domain);
 
+      const std::string & recovery_mail() const;
+      void recovery_mail(std::string & recovery_mail);
+
       boost::posix_time::ptime created() const;
       void created(boost::posix_time::ptime created);
 
@@ -85,6 +89,7 @@ namespace UserManagementInterface {
       unsigned long long quota_;
       std::string local_part_;
       std::string domain_;
+      std::string recovery_mail_;
       boost::posix_time::ptime created_;
       boost::posix_time::ptime modified_;
       bool active_;

@@ -20,7 +20,7 @@
 
 namespace UserManagementInterface {
 
-  addUserRet RPCObjectI::addUser(const std::string& username, const std::string& name, long quota, bool active , const Ice::Current&){
+  addUserRet RPCObjectI::addUser(const std::string& username, const std::string& name, const std::string& recovery_mail, long quota, bool active , const Ice::Current&){
     std::stringstream ss(username);
     std::string segment;
     std::vector<std::string> seglist;
@@ -60,6 +60,10 @@ namespace UserManagementInterface {
     if (!boost::regex_match(name,nameregex))
       return ans;
 
+    // validate format of recovery mail
+    if (!(recovery_mail == "" || boost::regex_match(recovery_mail,mailregex)))
+      return ans;
+
     ans.returncode = SUCCESS;
     ans.password = generatePassword();
 
@@ -67,8 +71,12 @@ namespace UserManagementInterface {
     boost::posix_time::ptime created = t;
     boost::posix_time::ptime modified = t;
     std::unique_ptr<database> db(new odb::mysql::database(dbuser, dbpassword, dbname));
-    User user(username, ans.password, name, maildir, quota, local_part, domain, created, modified, true);
-    addUser(user, db);
+    User user(username, ans.password, name, maildir, quota, local_part, domain, recovery_mail, created, modified, true);
+    try {
+      addUser(user, db);
+    } catch (const DatabaseException& e) {
+      ans.returncode = FAILUREUSEREXISTS;
+    }
 
     return ans;
   }

@@ -19,8 +19,15 @@
 #if ODB_BOOST_VERSION != 2030000 // 2.3.0
 #  error ODB and C++ compilers see different libodb-boost interface versions
 #endif
+#include <boost/shared_ptr.hpp>
+#include <odb/boost/smart-ptr/pointer-traits.hxx>
+#include <odb/boost/smart-ptr/wrapper-traits.hxx>
+#include <odb/boost/optional/wrapper-traits.hxx>
+#include <odb/boost/unordered/container-traits.hxx>
 #include <odb/boost/date-time/mysql/gregorian-traits.hxx>
 #include <odb/boost/date-time/mysql/posix-time-traits.hxx>
+#include <odb/boost/multi-index/container-traits.hxx>
+#include <odb/boost/uuid/mysql/uuid-traits.hxx>
 //
 // End prologue.
 
@@ -34,6 +41,10 @@
 #include <odb/callback.hxx>
 #include <odb/wrapper-traits.hxx>
 #include <odb/pointer-traits.hxx>
+#ifdef BOOST_TR1_MEMORY_HPP_INCLUDED
+#  include <odb/tr1/wrapper-traits.hxx>
+#  include <odb/tr1/pointer-traits.hxx>
+#endif
 #include <odb/container-traits.hxx>
 #include <odb/no-op-cache-traits.hxx>
 #include <odb/result.hxx>
@@ -57,7 +68,7 @@ namespace odb
   {
     public:
     typedef ::UserManagementInterface::User object_type;
-    typedef ::UserManagementInterface::User* pointer_type;
+    typedef ::boost::shared_ptr< ::UserManagementInterface::User > pointer_type;
     typedef odb::pointer_traits<pointer_type> pointer_traits;
 
     static const bool polymorphic = false;
@@ -186,6 +197,18 @@ namespace odb
 
     static const domain_type_ domain;
 
+    // recovery_mail
+    //
+    typedef
+    mysql::query_column<
+      mysql::value_traits<
+        ::std::string,
+        mysql::id_string >::query_type,
+      mysql::id_string >
+    recovery_mail_type_;
+
+    static const recovery_mail_type_ recovery_mail;
+
     // created
     //
     typedef
@@ -257,6 +280,11 @@ namespace odb
   const typename query_columns< ::UserManagementInterface::User, id_mysql, A >::domain_type_
   query_columns< ::UserManagementInterface::User, id_mysql, A >::
   domain (A::table_name, "`domain`", 0);
+
+  template <typename A>
+  const typename query_columns< ::UserManagementInterface::User, id_mysql, A >::recovery_mail_type_
+  query_columns< ::UserManagementInterface::User, id_mysql, A >::
+  recovery_mail (A::table_name, "`recovery_mail`", 0);
 
   template <typename A>
   const typename query_columns< ::UserManagementInterface::User, id_mysql, A >::created_type_
@@ -336,6 +364,12 @@ namespace odb
       unsigned long domain_size;
       my_bool domain_null;
 
+      // recovery_mail_
+      //
+      details::buffer recovery_mail_value;
+      unsigned long recovery_mail_size;
+      my_bool recovery_mail_null;
+
       // created_
       //
       MYSQL_TIME created_value;
@@ -390,7 +424,7 @@ namespace odb
 
     typedef mysql::query_base query_base_type;
 
-    static const std::size_t column_count = 10UL;
+    static const std::size_t column_count = 11UL;
     static const std::size_t id_column_count = 1UL;
     static const std::size_t inverse_column_count = 0UL;
     static const std::size_t readonly_column_count = 0UL;

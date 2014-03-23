@@ -100,7 +100,7 @@ namespace UserManagementInterface {
 
     public:
       /* add user */
-      virtual addUserRet addUser(const std::string& username,const std::string& name, long quota, bool active ,const Ice::Current&);
+      virtual addUserRet addUser(const std::string& username,const std::string& name, const std::string& revoveryMail, long quota, bool active ,const Ice::Current&);
 
       /* change user password */
       virtual statuscode changeUserPassword(const std::string& usernam, const std::string& newpassword ,const Ice::Current&);

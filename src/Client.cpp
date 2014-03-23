@@ -70,14 +70,21 @@ int main(int argc, char* argv[]) {
 
       if (command[0].compare(std::string("ADDUSER")) == 0)
       {
-        if (command.size() != 5)
+        if (command.size() != 6)
         {
           status = FAILURE;
         } else {
-          addUserRet ans = rpcobject->addUser(command[1],command[2],atoi(command[3].c_str()),( command[4].compare("TRUE") == 0 ? true : false));
-          if ((status = ans.returncode) == SUCCESS)
+          addUserRet ans = rpcobject->addUser(command[1],command[2],command[3],atoi(command[4].c_str()),( command[5].compare("TRUE") == 0 ? true : false));
+          if (ans.returncode == SUCCESS)
           {
+            status = SUCCESS;
             std::cout << ans.password << std::endl;
+          } else {
+            status = FAILURE;
+            if (ans.returncode == FAILUREUSEREXISTS)
+            {
+              std::cout << "USER ALREADY IN DB" << std::endl;
+            }
           }
         }
       } else {
