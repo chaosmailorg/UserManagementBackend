@@ -25,6 +25,7 @@
 #include <array>
 #include <string>
 #include <sstream>
+#include <openssl/rand.h>
 
 #include <boost/regex.hpp>
 
@@ -75,10 +76,31 @@ namespace UserManagementInterface {
         t.commit();
       }
 
+      static std::string generatePassword() {
+        unsigned char buffer[pw_length];
+        const int tries = 5;
+        for (int i=0; i<tries; i++)
+        {
+          int status = RAND_bytes(buffer, pw_length);
+          if (status == 1)
+            break;
+        }
+
+        // if status != 1 pw is weak
+
+        char password[pw_length+1];
+        for (int i=0; i<pw_length; i++)
+        {
+          password[i] = '!' + (buffer[i] % ('~' + 0x1 - '!'));
+        }
+        password[pw_length] = 0;
+
+        return password;
+      }
 
     public:
       /* add user */
-      virtual statuscode addUser(const std::string& username,const std::string& name, const std::string& password, long quota, bool active ,const Ice::Current&);
+      virtual addUserRet addUser(const std::string& username,const std::string& name, long quota, bool active ,const Ice::Current&);
 
       /* change user password */
       virtual statuscode changeUserPassword(const std::string& usernam, const std::string& newpassword ,const Ice::Current&);

@@ -73,8 +73,8 @@ void
     }
 }
 
-::UserManagementInterface::statuscode
-IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx)
+::UserManagementInterface::addUserRet
+IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx)
 {
     ::IceInternal::InvocationObserver __observer(this, __UserManagementInterface__RPCObject__addUser_name, __ctx);
     int __cnt = 0;
@@ -86,7 +86,7 @@ IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& usern
             __checkTwowayOnly(__UserManagementInterface__RPCObject__addUser_name);
             __delBase = __getDelegate(false);
             ::IceDelegate::UserManagementInterface::RPCObject* __del = dynamic_cast< ::IceDelegate::UserManagementInterface::RPCObject*>(__delBase.get());
-            return __del->addUser(username, name, password, quota, active, __ctx, __observer);
+            return __del->addUser(username, name, quota, active, __ctx, __observer);
         }
         catch(const ::IceInternal::LocalExceptionWrapper& __ex)
         {
@@ -100,7 +100,7 @@ IceProxy::UserManagementInterface::RPCObject::addUser(const ::std::string& usern
 }
 
 ::Ice::AsyncResultPtr
-IceProxy::UserManagementInterface::RPCObject::begin_addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx, const ::IceInternal::CallbackBasePtr& __del, const ::Ice::LocalObjectPtr& __cookie)
+IceProxy::UserManagementInterface::RPCObject::begin_addUser(const ::std::string& username, const ::std::string& name, ::Ice::Long quota, bool active, const ::Ice::Context* __ctx, const ::IceInternal::CallbackBasePtr& __del, const ::Ice::LocalObjectPtr& __cookie)
 {
     __checkAsyncTwowayOnly(__UserManagementInterface__RPCObject__addUser_name);
     ::IceInternal::OutgoingAsyncPtr __result = new ::IceInternal::OutgoingAsync(this, __UserManagementInterface__RPCObject__addUser_name, __del, __cookie);
@@ -110,7 +110,6 @@ IceProxy::UserManagementInterface::RPCObject::begin_addUser(const ::std::string&
         ::IceInternal::BasicStream* __os = __result->__startWriteParams(::Ice::DefaultFormat);
         __os->write(username);
         __os->write(name);
-        __os->write(password);
         __os->write(quota);
         __os->write(active);
         __result->__endWriteParams();
@@ -123,11 +122,11 @@ IceProxy::UserManagementInterface::RPCObject::begin_addUser(const ::std::string&
     return __result;
 }
 
-::UserManagementInterface::statuscode
+::UserManagementInterface::addUserRet
 IceProxy::UserManagementInterface::RPCObject::end_addUser(const ::Ice::AsyncResultPtr& __result)
 {
     ::Ice::AsyncResult::__check(__result, this, __UserManagementInterface__RPCObject__addUser_name);
-    ::UserManagementInterface::statuscode __ret;
+    ::UserManagementInterface::addUserRet __ret;
     bool __ok = __result->__wait();
     try
     {
@@ -486,8 +485,8 @@ IceProxy::UserManagementInterface::RPCObject::__newInstance() const
     return new RPCObject;
 }
 
-::UserManagementInterface::statuscode
-IceDelegateM::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver& __observer)
+::UserManagementInterface::addUserRet
+IceDelegateM::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver& __observer)
 {
     ::IceInternal::Outgoing __og(__handler.get(), __UserManagementInterface__RPCObject__addUser_name, ::Ice::Normal, __context, __observer);
     try
@@ -495,7 +494,6 @@ IceDelegateM::UserManagementInterface::RPCObject::addUser(const ::std::string& u
         ::IceInternal::BasicStream* __os = __og.startWriteParams(::Ice::DefaultFormat);
         __os->write(username);
         __os->write(name);
-        __os->write(password);
         __os->write(quota);
         __os->write(active);
         __og.endWriteParams();
@@ -505,7 +503,7 @@ IceDelegateM::UserManagementInterface::RPCObject::addUser(const ::std::string& u
         __og.abort(__ex);
     }
     bool __ok = __og.invoke();
-    ::UserManagementInterface::statuscode __ret;
+    ::UserManagementInterface::addUserRet __ret;
     try
     {
         if(!__ok)
@@ -688,19 +686,18 @@ IceDelegateM::UserManagementInterface::RPCObject::userCount(const ::Ice::Context
     }
 }
 
-::UserManagementInterface::statuscode
-IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, const ::std::string& password, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver&)
+::UserManagementInterface::addUserRet
+IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& username, const ::std::string& name, ::Ice::Long quota, bool active, const ::Ice::Context* __context, ::IceInternal::InvocationObserver&)
 {
     class _DirectI : public ::IceInternal::Direct
     {
     public:
 
-        _DirectI(::UserManagementInterface::statuscode& __result, const ::std::string& __p_username, const ::std::string& __p_name, const ::std::string& __p_password, ::Ice::Long __p_quota, bool __p_active, const ::Ice::Current& __current) : 
+        _DirectI(::UserManagementInterface::addUserRet& __result, const ::std::string& __p_username, const ::std::string& __p_name, ::Ice::Long __p_quota, bool __p_active, const ::Ice::Current& __current) : 
             ::IceInternal::Direct(__current),
             _result(__result),
             _m_username(__p_username),
             _m_name(__p_name),
-            _m_password(__p_password),
             _m_quota(__p_quota),
             _m_active(__p_active)
         {
@@ -714,26 +711,25 @@ IceDelegateD::UserManagementInterface::RPCObject::addUser(const ::std::string& u
             {
                 throw ::Ice::OperationNotExistException(__FILE__, __LINE__, _current.id, _current.facet, _current.operation);
             }
-            _result = servant->addUser(_m_username, _m_name, _m_password, _m_quota, _m_active, _current);
+            _result = servant->addUser(_m_username, _m_name, _m_quota, _m_active, _current);
             return ::Ice::DispatchOK;
         }
         
     private:
         
-        ::UserManagementInterface::statuscode& _result;
+        ::UserManagementInterface::addUserRet& _result;
         const ::std::string& _m_username;
         const ::std::string& _m_name;
-        const ::std::string& _m_password;
         ::Ice::Long _m_quota;
         bool _m_active;
     };
     
     ::Ice::Current __current;
     __initCurrent(__current, __UserManagementInterface__RPCObject__addUser_name, ::Ice::Normal, __context);
-    ::UserManagementInterface::statuscode __result;
+    ::UserManagementInterface::addUserRet __result;
     try
     {
-        _DirectI __direct(__result, username, name, password, quota, active, __current);
+        _DirectI __direct(__result, username, name, quota, active, __current);
         try
         {
             __direct.getServant()->__collocDispatch(__direct);
@@ -1081,16 +1077,14 @@ UserManagementInterface::RPCObject::___addUser(::IceInternal::Incoming& __inS, c
     ::IceInternal::BasicStream* __is = __inS.startReadParams();
     ::std::string username;
     ::std::string name;
-    ::std::string password;
     ::Ice::Long quota;
     bool active;
     __is->read(username);
     __is->read(name);
-    __is->read(password);
     __is->read(quota);
     __is->read(active);
     __inS.endReadParams();
-    ::UserManagementInterface::statuscode __ret = addUser(username, name, password, quota, active, __current);
+    ::UserManagementInterface::addUserRet __ret = addUser(username, name, quota, active, __current);
     ::IceInternal::BasicStream* __os = __inS.__startWriteParams(::Ice::DefaultFormat);
     __os->write(__ret);
     __inS.__endWriteParams(true);

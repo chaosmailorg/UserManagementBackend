@@ -20,16 +20,18 @@
 
 namespace UserManagementInterface {
 
-  statuscode RPCObjectI::addUser(const std::string& username, const std::string& name, const std::string& password, long quota, bool active , const Ice::Current&){
+  addUserRet RPCObjectI::addUser(const std::string& username, const std::string& name, long quota, bool active , const Ice::Current&){
     std::stringstream ss(username);
     std::string segment;
     std::vector<std::string> seglist;
+
+    addUserRet ans = { FAILURE, "" };
 
     while(std::getline(ss, segment, '@'))
       seglist.push_back(segment);
 
     if (seglist.size() != 2)
-      return FAILURE;
+      return ans;
 
     const std::string local_part = seglist[0];
     const std::string domain = seglist[1];
@@ -38,7 +40,7 @@ namespace UserManagementInterface {
     // validate email / username format
     const boost::regex mailregex(mailname_regex,boost::regex::perl);
     if (!boost::regex_match(username,mailregex))
-      return FAILURE;
+      return ans;
 
     // validate domainformat
     bool domain_valid = false;
@@ -51,21 +53,24 @@ namespace UserManagementInterface {
       }
     }
     if (!domain_valid)
-      return FAILURE;
+      return ans;
 
     // validate format of username
     const boost::regex nameregex(name_regex,boost::regex::perl);
     if (!boost::regex_match(name,nameregex))
-      return FAILURE;
+      return ans;
+
+    ans.returncode = SUCCESS;
+    ans.password = generatePassword();
 
     boost::posix_time::ptime t(boost::posix_time::second_clock::universal_time());
     boost::posix_time::ptime created = t;
     boost::posix_time::ptime modified = t;
     std::unique_ptr<database> db(new odb::mysql::database(dbuser, dbpassword, dbname));
-    User user(username, password, name, maildir, quota, local_part, domain, created, modified, true);
+    User user(username, ans.password, name, maildir, quota, local_part, domain, created, modified, true);
     addUser(user, db);
 
-    return SUCCESS;
+    return ans;
   }
 
   /*

@@ -25,10 +25,15 @@ module UserManagementInterface {
     FAILUREEMPTYSTRING
   };
 
+  struct addUserRet {
+    statuscode returncode;
+    string password;
+  };
+
   interface RPCObject {
 
     /* add user */
-    statuscode addUser(string username, string name, string password, long quota, bool active);
+    addUserRet addUser(string username, string name, long quota, bool active);
 
     /* change user password */
     statuscode changeUserPassword(string usernam, string newpassword);

@@ -70,10 +70,16 @@ int main(int argc, char* argv[]) {
 
       if (command[0].compare(std::string("ADDUSER")) == 0)
       {
-        if (command.size() != 6)
+        if (command.size() != 5)
+        {
           status = FAILURE;
-        else
-          status = rpcobject->addUser(command[1],command[2],command[3],atoi(command[4].c_str()),( command[5].compare("TRUE") == 0 ? true : false));
+        } else {
+          addUserRet ans = rpcobject->addUser(command[1],command[2],atoi(command[3].c_str()),( command[4].compare("TRUE") == 0 ? true : false));
+          if ((status = ans.returncode) == SUCCESS)
+          {
+            std::cout << ans.password << std::endl;
+          }
+        }
       } else {
 
         if (command[0].compare(std::string("CHANGEUSERPASSWORD")) == 0)
