@@ -26,6 +26,8 @@
 #include <string>
 #include <sstream>
 
+#include <boost/regex.hpp>
+
 #include <odb/database.hxx>
 #include <odb/transaction.hxx>
 #include <odb/mysql/database.hxx>

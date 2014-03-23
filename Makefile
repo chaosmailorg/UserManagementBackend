@@ -11,7 +11,7 @@ CPPFLAGS = $(FLAGS_FAST)
 CPPFLAGS += $(FLAGS_HARDENED)
 CPPFLAGS += -std=c++0x
 INCLUDES = -I$(ICE_HOME)/include -I./inc
-LIBS = -L$(ICE_HOME)/lib -lIce -lIceUtil -lodb-mysql -lodb -lodb-boost
+LIBS = -L$(ICE_HOME)/lib -lIce -lIceUtil -lodb-mysql -lodb -lodb-boost -lboost_regex
 
 # =============================================================================
 

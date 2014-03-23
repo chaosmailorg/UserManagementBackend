@@ -20,30 +20,51 @@
 
 namespace UserManagementInterface {
 
-/*
- * TODO: validate inputs
- */
   statuscode RPCObjectI::addUser(const std::string& username, const std::string& name, const std::string& password, long quota, bool active , const Ice::Current&){
-      std::stringstream ss(username);
-      std::string segment;
-      std::vector<std::string> seglist;
+    std::stringstream ss(username);
+    std::string segment;
+    std::vector<std::string> seglist;
 
-      while(std::getline(ss, segment, '@'))
-        seglist.push_back(segment);
+    while(std::getline(ss, segment, '@'))
+      seglist.push_back(segment);
 
-      if (seglist.size() != 2)
-        return FAILURE;
+    if (seglist.size() != 2)
+      return FAILURE;
 
-      const std::string local_part = seglist[0];
-      const std::string domain = seglist[1];
-      const std::string maildir = username + "/";
+    const std::string local_part = seglist[0];
+    const std::string domain = seglist[1];
+    const std::string maildir = username + "/";
 
-      boost::posix_time::ptime t(boost::posix_time::second_clock::universal_time());
-      boost::posix_time::ptime created = t;
-      boost::posix_time::ptime modified = t;
-      std::unique_ptr<database> db(new odb::mysql::database(dbuser, dbpassword, dbname));
-      User user(username, password, name, maildir, quota, local_part, domain, created, modified, true);
-      addUser(user, db);
+    // validate email / username format
+    const boost::regex mailregex(mailname_regex,boost::regex::perl);
+    if (!boost::regex_match(username,mailregex))
+      return FAILURE;
+
+    // validate domainformat
+    bool domain_valid = false;
+    for (auto it = valid_domains.begin(); it != valid_domains.end(); it++)
+    {
+      if (*it == domain)
+      {
+        domain_valid = true;
+        break;
+      }
+    }
+    if (!domain_valid)
+      return FAILURE;
+
+    // validate format of username
+    const boost::regex nameregex(name_regex,boost::regex::perl);
+    if (!boost::regex_match(name,nameregex))
+      return FAILURE;
+
+    boost::posix_time::ptime t(boost::posix_time::second_clock::universal_time());
+    boost::posix_time::ptime created = t;
+    boost::posix_time::ptime modified = t;
+    std::unique_ptr<database> db(new odb::mysql::database(dbuser, dbpassword, dbname));
+    User user(username, password, name, maildir, quota, local_part, domain, created, modified, true);
+    addUser(user, db);
+
     return SUCCESS;
   }
 
