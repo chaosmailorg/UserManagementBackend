@@ -209,6 +209,18 @@ namespace odb
 
     static const recovery_mail_type_ recovery_mail;
 
+    // pubkey
+    //
+    typedef
+    mysql::query_column<
+      mysql::value_traits<
+        ::std::string,
+        mysql::id_string >::query_type,
+      mysql::id_string >
+    pubkey_type_;
+
+    static const pubkey_type_ pubkey;
+
     // created
     //
     typedef
@@ -285,6 +297,11 @@ namespace odb
   const typename query_columns< ::UserManagementInterface::User, id_mysql, A >::recovery_mail_type_
   query_columns< ::UserManagementInterface::User, id_mysql, A >::
   recovery_mail (A::table_name, "`recovery_mail`", 0);
+
+  template <typename A>
+  const typename query_columns< ::UserManagementInterface::User, id_mysql, A >::pubkey_type_
+  query_columns< ::UserManagementInterface::User, id_mysql, A >::
+  pubkey (A::table_name, "`pubkey`", 0);
 
   template <typename A>
   const typename query_columns< ::UserManagementInterface::User, id_mysql, A >::created_type_
@@ -370,6 +387,12 @@ namespace odb
       unsigned long recovery_mail_size;
       my_bool recovery_mail_null;
 
+      // pubkey_
+      //
+      details::buffer pubkey_value;
+      unsigned long pubkey_size;
+      my_bool pubkey_null;
+
       // created_
       //
       MYSQL_TIME created_value;
@@ -424,7 +447,7 @@ namespace odb
 
     typedef mysql::query_base query_base_type;
 
-    static const std::size_t column_count = 11UL;
+    static const std::size_t column_count = 12UL;
     static const std::size_t id_column_count = 1UL;
     static const std::size_t inverse_column_count = 0UL;
     static const std::size_t readonly_column_count = 0UL;

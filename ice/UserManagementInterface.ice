@@ -33,7 +33,7 @@ module UserManagementInterface {
   interface RPCObject {
 
     /* add user */
-    addUserRet addUser(string username, string name, string recoveryMail, long quota, bool active);
+    addUserRet addUser(string username, string name, string recoveryMail, string pubkey, long quota, bool active);
 
     /* change user password */
     statuscode changeUserPassword(string usernam, string newpassword);

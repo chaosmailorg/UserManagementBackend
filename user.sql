@@ -13,6 +13,7 @@ CREATE TABLE `User` (
   `local_part` TEXT NOT NULL,
   `domain` TEXT NOT NULL,
   `recovery_mail` TEXT NOT NULL,
+  `pubkey` TEXT NOT NULL,
   `created` DATETIME NULL,
   `modified` DATETIME NULL,
   `active` TINYINT(1) NOT NULL)

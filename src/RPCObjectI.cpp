@@ -20,7 +20,7 @@
 
 namespace UserManagementInterface {
 
-  addUserRet RPCObjectI::addUser(const std::string& username, const std::string& name, const std::string& recovery_mail, long quota, bool active , const Ice::Current&){
+  addUserRet RPCObjectI::addUser(const std::string& username, const std::string& name, const std::string& recovery_mail, const std::string& pubkey, long quota, bool active , const Ice::Current&){
     std::stringstream ss(username);
     std::string segment;
     std::vector<std::string> seglist;
@@ -38,8 +38,11 @@ namespace UserManagementInterface {
     const std::string maildir = username + "/";
 
     // validate email / username format
-    const boost::regex mailregex(mailname_regex,boost::regex::perl);
-    if (!boost::regex_match(username,mailregex))
+    const boost::regex mailregex_pos(mail_regex_pos,boost::regex::perl);
+    const boost::regex mailregex_neg(mail_regex_neg,boost::regex::perl);
+    if(!(
+      boost::regex_match(username,mailregex_pos) &&
+      !boost::regex_match(username,mailregex_neg)))
       return ans;
 
     // validate domainformat
@@ -55,23 +58,28 @@ namespace UserManagementInterface {
     if (!domain_valid)
       return ans;
 
-    // validate format of username
+    // validate format of local_part
     const boost::regex nameregex(name_regex,boost::regex::perl);
     if (!boost::regex_match(name,nameregex))
       return ans;
 
     // validate format of recovery mail
-    if (!(recovery_mail == "" || boost::regex_match(recovery_mail,mailregex)))
+    if(!(
+      recovery_mail == "" ||
+      (boost::regex_match(recovery_mail,mailregex_pos) &&
+      !boost::regex_match(recovery_mail,mailregex_neg))))
       return ans;
 
-    ans.returncode = SUCCESS;
+    // TODO validate pubkey
+
     ans.password = generatePassword();
+    ans.returncode = SUCCESS;
 
     boost::posix_time::ptime t(boost::posix_time::second_clock::universal_time());
     boost::posix_time::ptime created = t;
     boost::posix_time::ptime modified = t;
     std::unique_ptr<database> db(new odb::mysql::database(dbuser, dbpassword, dbname));
-    User user(username, ans.password, name, maildir, quota, local_part, domain, recovery_mail, created, modified, true);
+    User user(username, ans.password, name, maildir, quota, local_part, domain, recovery_mail, pubkey, created, modified, true);
     try {
       addUser(user, db);
     } catch (const DatabaseException& e) {

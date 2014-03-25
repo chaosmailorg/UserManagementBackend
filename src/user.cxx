@@ -29,6 +29,7 @@ namespace UserManagementInterface {
     const std::string & local_part,
     const std::string & domain,
     const std::string & recovery_mail,
+    const std::string & pubkey,
     boost::posix_time::ptime created,
     boost::posix_time::ptime modified,
     bool active) : username_(username),
@@ -39,6 +40,7 @@ namespace UserManagementInterface {
     local_part_(local_part),
     domain_(domain),
     recovery_mail_(recovery_mail),
+    pubkey_(pubkey),
     created_(created),
     modified_(modified),
     active_(active)
@@ -106,6 +108,14 @@ namespace UserManagementInterface {
 
   void User::recovery_mail(std::string & recovery_mail) {
     recovery_mail_ = recovery_mail;
+  }
+
+  const std::string & User::pubkey() const {
+    return pubkey_;
+  }
+
+  void User::pubkey(std::string & pubkey) {
+    pubkey_ = pubkey;
   }
 
   boost::posix_time::ptime User::created() const {

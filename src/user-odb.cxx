@@ -128,17 +128,25 @@ namespace odb
       grew = true;
     }
 
-    // created_
+    // pubkey_
     //
-    t[8UL] = 0;
+    if (t[8UL])
+    {
+      i.pubkey_value.capacity (i.pubkey_size);
+      grew = true;
+    }
 
-    // modified_
+    // created_
     //
     t[9UL] = 0;
 
-    // active_
+    // modified_
     //
     t[10UL] = 0;
+
+    // active_
+    //
+    t[11UL] = 0;
 
     return grew;
   }
@@ -233,6 +241,16 @@ namespace odb
       i.recovery_mail_value.capacity ());
     b[n].length = &i.recovery_mail_size;
     b[n].is_null = &i.recovery_mail_null;
+    n++;
+
+    // pubkey_
+    //
+    b[n].buffer_type = MYSQL_TYPE_STRING;
+    b[n].buffer = i.pubkey_value.data ();
+    b[n].buffer_length = static_cast<unsigned long> (
+      i.pubkey_value.capacity ());
+    b[n].length = &i.pubkey_size;
+    b[n].is_null = &i.pubkey_null;
     n++;
 
     // created_
@@ -445,6 +463,27 @@ namespace odb
       grew = grew || (cap != i.recovery_mail_value.capacity ());
     }
 
+    // pubkey_
+    //
+    {
+      ::std::string const& v =
+        o.pubkey_;
+
+      bool is_null (false);
+      std::size_t size (0);
+      std::size_t cap (i.pubkey_value.capacity ());
+      mysql::value_traits<
+          ::std::string,
+          mysql::id_string >::set_image (
+        i.pubkey_value,
+        size,
+        is_null,
+        v);
+      i.pubkey_null = is_null;
+      i.pubkey_size = static_cast<unsigned long> (size);
+      grew = grew || (cap != i.pubkey_value.capacity ());
+    }
+
     // created_
     //
     {
@@ -618,6 +657,21 @@ namespace odb
         i.recovery_mail_null);
     }
 
+    // pubkey_
+    //
+    {
+      ::std::string& v =
+        o.pubkey_;
+
+      mysql::value_traits<
+          ::std::string,
+          mysql::id_string >::set_value (
+        v,
+        i.pubkey_value,
+        i.pubkey_size,
+        i.pubkey_null);
+    }
+
     // created_
     //
     {
@@ -695,11 +749,12 @@ namespace odb
   "`local_part`, "
   "`domain`, "
   "`recovery_mail`, "
+  "`pubkey`, "
   "`created`, "
   "`modified`, "
   "`active`) "
   "VALUES "
-  "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   const char access::object_traits_impl< ::UserManagementInterface::User, id_mysql >::find_statement[] =
   "SELECT "
@@ -711,6 +766,7 @@ namespace odb
   "`User`.`local_part`, "
   "`User`.`domain`, "
   "`User`.`recovery_mail`, "
+  "`User`.`pubkey`, "
   "`User`.`created`, "
   "`User`.`modified`, "
   "`User`.`active` "
@@ -727,6 +783,7 @@ namespace odb
   "`local_part`=?, "
   "`domain`=?, "
   "`recovery_mail`=?, "
+  "`pubkey`=?, "
   "`created`=?, "
   "`modified`=?, "
   "`active`=? "
@@ -746,6 +803,7 @@ namespace odb
   "`User`.`local_part`, "
   "`User`.`domain`, "
   "`User`.`recovery_mail`, "
+  "`User`.`pubkey`, "
   "`User`.`created`, "
   "`User`.`modified`, "
   "`User`.`active` "

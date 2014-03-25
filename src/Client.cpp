@@ -74,7 +74,8 @@ int main(int argc, char* argv[]) {
         {
           status = FAILURE;
         } else {
-          addUserRet ans = rpcobject->addUser(command[1],command[2],command[3],atoi(command[4].c_str()),( command[5].compare("TRUE") == 0 ? true : false));
+          std::string pubkey = "_pubkey_";
+          addUserRet ans = rpcobject->addUser(command[1],command[2],command[3],pubkey,atoi(command[4].c_str()),( command[5].compare("TRUE") == 0 ? true : false));
           if (ans.returncode == SUCCESS)
           {
             status = SUCCESS;

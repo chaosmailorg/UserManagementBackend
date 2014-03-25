@@ -76,15 +76,10 @@ namespace UserManagementInterface {
         t.commit();
       }
 
+      // TODO make ASCII range for passwords better readable
       static std::string generatePassword() {
         unsigned char buffer[pw_length];
-        const int tries = 5;
-        for (int i=0; i<tries; i++)
-        {
-          int status = RAND_bytes(buffer, pw_length);
-          if (status == 1)
-            break;
-        }
+        int status = RAND_bytes(buffer, pw_length);
 
         // if status != 1 pw is weak
 
@@ -100,7 +95,7 @@ namespace UserManagementInterface {
 
     public:
       /* add user */
-      virtual addUserRet addUser(const std::string& username,const std::string& name, const std::string& revoveryMail, long quota, bool active ,const Ice::Current&);
+      virtual addUserRet addUser(const std::string& username,const std::string& name, const std::string& revoveryMail, const std::string& pubkey, long quota, bool active ,const Ice::Current&);
 
       /* change user password */
       virtual statuscode changeUserPassword(const std::string& usernam, const std::string& newpassword ,const Ice::Current&);
