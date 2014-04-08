@@ -10,8 +10,8 @@ CXX = g++
 CPPFLAGS = $(FLAGS_FAST)
 CPPFLAGS += $(FLAGS_HARDENED)
 CPPFLAGS += -std=c++0x
-INCLUDES = -I$(ICE_HOME)/include -I./inc
-LIBS = -L$(ICE_HOME)/lib -lIce -lIceUtil -lodb-mysql -lodb -lodb-boost -lboost_regex -lcrypto
+INCLUDES = -I$(ICE_HOME)/include -I./inc -I/opt/boost/include
+LIBS = -L$(ICE_HOME)/lib -L/opt/boost/lib -lIce -lIceUtil -lodb-mysql -lodb -lodb-boost -lboost_regex -lcrypto
 
 # =============================================================================
 
